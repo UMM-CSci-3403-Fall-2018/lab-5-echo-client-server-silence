@@ -32,6 +32,7 @@ public class EchoClient {
             }
 
             // Close the socket when we're done reading from it
+            System.out.flush();
             socket.close();
 
             // Provide some minimal error handling.
