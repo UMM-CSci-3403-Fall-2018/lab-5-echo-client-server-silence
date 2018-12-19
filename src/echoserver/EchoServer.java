@@ -1,7 +1,8 @@
 package echoserver;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,12 +20,14 @@ public class EchoServer {
                 Socket client = sock.accept();
                 System.out.println("Got a request!");
 
-                // Construct a writer so we can write to the socket, thereby
-                // sending something back to the client.
-                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                InputStream input = client.getInputStream();
+                OutputStream output = client.getOutputStream();
 
-                // Send the current date back tothe client.
-                writer.println(new java.util.Date().toString());
+                int tracker;
+
+                while((tracker = input.read()) != -1) {
+                    output.write(tracker);
+                }
 
                 // Close the client socket since we're done.
                 client.close();
